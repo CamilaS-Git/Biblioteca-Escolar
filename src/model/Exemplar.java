@@ -1,17 +1,18 @@
-package Model;
+package model;
 
-import model.Livro;
-import model.StatusExemplar;
+import model.enums.StatusExemplar;
 
 public class Exemplar {
     private int id;
     private Livro livro;
+    private String codigo;
     private StatusExemplar status = StatusExemplar.DISPONIVEL;
 
-    public Exemplar(int id, Livro livro) {
+    public Exemplar(int id, String codigo, Livro livro) {
         if (livro == null) {
             throw new IllegalArgumentException("O exemplar precisa de um livro.");
         }
+        this.codigo = codigo;
         this.id = id;
         this.livro = livro;
     }
@@ -19,6 +20,8 @@ public class Exemplar {
     public int getId() {
         return id;
     }
+
+    public String getCodigo() {return codigo;}
 
     public Livro getLivro() {
         return livro;
@@ -28,17 +31,7 @@ public class Exemplar {
         return status;
     }
 
-    public void emprestar() {
-        if (status != StatusExemplar.DISPONIVEL) {
-            throw new IllegalArgumentException("Exemplar indisponível para empréstimo.");
-        }
-        status = StatusExemplar.EMPRESTADO;
-    }
-
-    public void devolver() {
-        if (status != StatusExemplar.EMPRESTADO) {
-            throw new IllegalArgumentException("Este exemplar não está emprestado.");
-        }
-        status = StatusExemplar.DISPONIVEL;
+    public void setStatus(StatusExemplar status) {
+        this.status = status;
     }
 }
